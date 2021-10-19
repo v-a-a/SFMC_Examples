@@ -32,14 +32,14 @@ Content-Type: application/json
 ### SEND THE REQUEST ###
 ########################
 @token = {{auth.response.body.access_token}}
-POST {{REST_URI}}/messaging/v1/messageDefinitionSends/key:{{TS External Key}}/send
+POST {{REST_URI}}/messaging/v1/messageDefinitionSends/key:{{TS_External_Key}}/send
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
     "From": { // this section is optional
-        "Address": "{{From Email}}", 
-        "Name": "{{From Name}}"
+        "Address": "{{From_Email}}", 
+        "Name": "{{From_Name}}"
     },
     "To": { // this section is required
         "Address": "{{Email}}",
