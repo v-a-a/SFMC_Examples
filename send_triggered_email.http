@@ -1,0 +1,57 @@
+#############################################################
+### Use this REST request in VS COde official REST Client ###
+#############################################################
+
+########################
+### GET THE TOKEN V1 ###
+########################
+# @name auth
+POST {{Auth_URI}}/v1/requestToken
+Content-Type: application/json
+
+{
+    "clientId": "{{client_id}}",
+    "clientSecret": "{{client_secret}}"
+}
+
+########################
+### GET THE TOKEN V2 ###
+########################
+# @name auth
+POST {{Auth_URI}}/v2/token 
+Content-Type: application/json
+
+{
+    "grant_type": "client_credentials",
+    "client_id": "{{client_id}}",
+    "client_secret": "{{client_secret}}",
+    "account_id": "{{account_id}}"
+}
+
+########################
+### SEND THE REQUEST ###
+########################
+@token = {{auth.response.body.access_token}}
+POST {{REST_URI}}/messaging/v1/messageDefinitionSends/key:{{TS External Key}}/send
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "From": { // this section is optional
+        "Address": "{{From Email}}", 
+        "Name": "{{From Name}}"
+    },
+    "To": { // this section is required
+        "Address": "{{Email}}",
+        "SubscriberKey": "{{SubscriberKey}}",
+        "ContactAttributes": {
+            "SubscriberAttributes": {
+                "FirstName": "John",
+                "LastName": "Smith"
+            }
+        }
+    },
+    "Options": { // this section is optional
+        "RequestType": "ASYNC"
+    }
+}
